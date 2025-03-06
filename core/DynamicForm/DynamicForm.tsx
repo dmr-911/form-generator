@@ -27,6 +27,7 @@ import Checkbox from "./components/Checkbox";
 import ComboSelect from "./components/Select/ComboSelect";
 import { RadioGroup } from "@headlessui/react";
 import CheckboxGroup from "./components/CheckboxGroup";
+import SignaturePanel from "./components/SignaturePanel";
 
 interface ValidationRule {
   type: string;
@@ -912,8 +913,8 @@ export const InputRenderrer = (input: any) => {
     case "checkbox-group":
       return <CheckboxGroup {...rest} />;
 
-    // case 'signature':
-    //   return <SignaturePanel ref={signRef} {...rest} />;
+    case 'signature':
+      return <SignaturePanel ref={signRef} {...rest} />;
 
     // case 'initials':
     //   return <SignaturePanel ref={initialsRef} {...rest} />;
