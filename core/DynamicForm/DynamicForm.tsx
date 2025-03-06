@@ -39,6 +39,9 @@ import Password from "./components/Password";
 import Number from "./components/Number";
 import { BiTrash } from "react-icons/bi";
 import Textarea from "./components/TextArea";
+import Select from "./components/Select";
+import File from "./components/File";
+import FormError from "./FormError";
 
 interface ValidationRule {
   type: string;
@@ -802,8 +805,8 @@ export const InputRenderrer = (input: any) => {
     //   return <Phone {...rest} />;
     case "number":
       return <Number type="number" {...rest} />;
-    // case 'select':
-    //   return <Select {...rest} />;
+    case "select":
+      return <Select {...rest} />;
 
     // case 'document-editor':
     //   return (
@@ -820,51 +823,49 @@ export const InputRenderrer = (input: any) => {
     //     </div>
     //   );
 
-    // case 'file':
-    //   return (
-    //     <>
-    //       <div className="col-span-full mx-auto rounded-md">
-    //         <div className="flex justify-between">
-    //           {/* Description */}
-    //           <div className="flex flex-col gap-0">
-    //             <p className="col-span-10 text-muted-500 dark:text-muted-200">
-    //               Select Media <span className="text-red-500">*</span>
-    //             </p>
-    //             <span className="text-xs text-muted-400">
-    //               Allowed Format {rest?.acceptedFileTypes?.join(', ')}
-    //             </span>
-    //           </div>
+    case "file":
+      return (
+        <>
+          {/* <div className="col-span-full mx-auto rounded-md">
+            <div className="flex justify-between">
+              <div className="flex flex-col gap-0">
+                <p className="col-span-10 text-muted-500 dark:text-muted-200">
+                  Select Media <span className="text-red-500">*</span>
+                </p>
+                <span className="text-xs text-muted-400">
+                  Allowed Format {rest?.acceptedFileTypes?.join(', ')}
+                </span>
+              </div>
 
-    //           {/* Button */}
-    //           <Button
-    //             type="button"
-    //             color="primary"
-    //             onClick={() => {
-    //               setOpen(!isOpen);
-    //             }}
-    //             className="flex h-10 items-center rounded bg-blue-500 px-4 font-bold text-white hover:bg-blue-700"
-    //           >
-    //             <ReIcon iconName="AiOutlineCloudUpload" />
-    //             <span>Upload</span>
-    //           </Button>
-    //         </div>
-    //       </div>
+              <Button
+                type="button"
+                color="primary"
+                onClick={() => {
+                  setOpen(!isOpen);
+                }}
+                className="flex h-10 items-center rounded bg-blue-500 px-4 font-bold text-white hover:bg-blue-700"
+              >
+                <ReIcon iconName="AiOutlineCloudUpload" />
+                <span>Upload</span>
+              </Button>
+            </div>
+          </div> */}
 
-    //       <FileHandler
-    //         files={rest?.value}
-    //         open={isOpen}
-    //         setOpen={setOpen}
-    //         setFiles={() => {}}
-    //         multiple={rest?.multiple}
-    //         acceptedFileTypes={['image/png', 'image/jpeg', 'application/pdf']}
-    //         onChange={({ data }) => {
-    //           console.log('data of file manager', data);
-    //           rest.formik.setFieldValue(rest.name, data);
-    //         }}
-    //       />
-    //       <FormError formik={rest.formik} name={rest.name} helperText={``} />
-    //     </>
-    //   );
+          <File
+            files={rest?.value}
+            open={isOpen}
+            setOpen={setOpen}
+            setFiles={() => {}}
+            multiple={rest?.multiple}
+            acceptedFileTypes={["image/png", "image/jpeg", "application/pdf"]}
+            onChange={({ data }) => {
+              console.log("data of file manager", data);
+              rest.formik.setFieldValue(rest.name, data);
+            }}
+          />
+          <FormError formik={rest.formik} name={rest.name} helperText={``} />
+        </>
+      );
     // case 'file-manager':
     //   return;
 
