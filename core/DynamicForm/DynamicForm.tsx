@@ -43,6 +43,7 @@ import Select from "./components/Select";
 import File from "./components/File";
 import FormError from "./FormError";
 import ToggleSwitch from "./components/ToggleSwitch";
+import Checkbox from "./components/Checkbox";
 
 interface ValidationRule {
   type: string;
@@ -877,8 +878,10 @@ export const InputRenderrer = (input: any) => {
           {...rest}
         />
       );
-    // case 'checkbox':
-    //   return <Checkbox checked={getIn(rest.formik.values, rest.name)} {...rest} />;
+    case "checkbox":
+      return (
+        <Checkbox checked={getIn(rest.formik.values, rest.name)} {...rest} />
+      );
 
     // case 'select':
     //   switch (rest.multiple) {
