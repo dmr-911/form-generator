@@ -38,6 +38,7 @@ import Input from "./components/Input";
 import Password from "./components/Password";
 import Number from "./components/Number";
 import { BiTrash } from "react-icons/bi";
+import Textarea from "./components/TextArea";
 
 interface ValidationRule {
   type: string;
@@ -868,7 +869,7 @@ export const InputRenderrer = (input: any) => {
     //   return;
 
     case "textarea":
-      return <textarea autoComplete="new-password" {...rest} />;
+      return <Textarea autoComplete="new-password" {...rest} />;
     // case 'switch':
     //   return <ToggleSwitch checked={getIn(rest.formik.values, rest.name)} {...rest} />;
     // case 'checkbox':
