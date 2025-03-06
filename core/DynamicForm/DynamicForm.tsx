@@ -867,8 +867,6 @@ export const InputRenderrer = (input: any) => {
           <FormError formik={rest.formik} name={rest.name} helperText={``} />
         </>
       );
-    // case 'file-manager':
-    //   return;
 
     case "textarea":
       return <Textarea autoComplete="new-password" {...rest} />;
