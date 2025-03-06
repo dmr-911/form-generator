@@ -8,31 +8,11 @@ import React, {
   useState,
 } from "react";
 import * as Yup from "yup";
-// import FileHandler from '../FileHandler/FileHandler';
-// import { ReIcon } from '../ReIcon/ReIcon';
-// import SignaturePanel from '../SignaturePanel/AloneSignature';
-// import Button from '../ui/button/Button';
-// import CheckboxGroup from '../ui/form/checkbox-group';
-// import Checkbox from '../ui/form/checkbox/Checkbox';
-// import Input from '../ui/form/input/Input';
-// import Number from '../ui/form/number/Number';
-// import Password from '../ui/form/password/Password';
-// import Phone from '../ui/form/Phone/Phone';
-// import CustomRadioGroup from '../ui/form/radio-group/CustomRadioGroup';
-// import RadioGroup from '../ui/form/radio-group/RadioGroup';
-// import ComboSelect from '../ui/form/select/ComboSelect';
-// import SelectOption from '../ui/form/select/Select';
-// import Textarea from '../ui/form/textarea/Textarea';
 import { checkDependency } from "./utils/checkDependency";
 import { filterSubmittingValues } from "./utils/filterSubmittingValues";
 import { generateInitialValues } from "./utils/generateInitialValues";
 import { generateValidationSchema } from "./utils/generateValidationSchema";
 import { storeOrSendValueToApi } from "./utils/storeOrSendValueToApi";
-// import FormError from "./FormError";
-// import ToggleSwitch from '../ui/form/toggle-switch/ToggleSwitch';
-// import ChoiceGroup from '../ui/form/radio-group/ChoiceGroup';
-// import FormError from './FormError';
-// import IconButton from '../ui/button-icon/IconButton';
 import { cn } from "../DynamicForm/utils/cn";
 import Input from "./components/Input";
 import Password from "./components/Password";
@@ -44,6 +24,9 @@ import File from "./components/File";
 import FormError from "./FormError";
 import ToggleSwitch from "./components/ToggleSwitch";
 import Checkbox from "./components/Checkbox";
+import ComboSelect from "./components/Select/ComboSelect";
+import { RadioGroup } from "@headlessui/react";
+import CheckboxGroup from "./components/CheckboxGroup";
 
 interface ValidationRule {
   type: string;
@@ -883,85 +866,51 @@ export const InputRenderrer = (input: any) => {
         <Checkbox checked={getIn(rest.formik.values, rest.name)} {...rest} />
       );
 
-    // case 'select':
-    //   switch (rest.multiple) {
-    //     case true:
-    //       return (
-    //         <>
-    //           <ComboSelect
-    //             label={rest.label}
-    //             placeholder={rest.placeholder}
-    //             options={rest.options}
-    //             floating={true}
-    //             {...rest}
-    //             onChange={(value) => {
-    //               // setSelectedRole(value);
-    //               // handleChange('selectedRole');
-    //               rest.formik.setFieldValue(rest.name, value);
-    //             }}
-    //             value={getIn(rest.formik.values, rest.name)}
-    //             multiple
-    //             // floating={true}
-    //             error={rest.formik.errors[rest.name]}
+    case "select":
+      switch (rest.multiple) {
+        case true:
+          return (
+            <>
+              <ComboSelect
+                label={rest.label}
+                placeholder={rest.placeholder}
+                options={rest.options}
+                floating={true}
+                {...rest}
+                onChange={(value) => {
+                  // setSelectedRole(value);
+                  // handleChange('selectedRole');
+                  rest.formik.setFieldValue(rest.name, value);
+                }}
+                value={getIn(rest.formik.values, rest.name)}
+                multiple
+                // floating={true}
+                error={rest.formik.errors[rest.name]}
 
-    //             // onBlur={() => handleBlur('selectedRole')}
-    //           />
-    //           <FormError name={rest.name} formik={rest.formik} helperText={``} />
-    //         </>
-    //       );
+                // onBlur={() => handleBlur('selectedRole')}
+              />
+              <FormError
+                name={rest.name}
+                formik={rest.formik}
+                helperText={``}
+              />
+            </>
+          );
 
-    //     case false:
-    //       return (
-    //         <>
-    //           <ComboSelect
-    //             label={rest.label}
-    //             floating={true}
-    //             name={rest.name}
-    //             id={rest.id}
-    //             placeholder={rest.placeholder}
-    //             options={rest.options}
-    //             multiple={true}
-    //             {...rest}
-    //             onChange={(value: any) => {
-    //               rest.formik.setFieldValue(rest.name, value?.value);
-    //             }}
-    //             {...(getIn(rest.formik.values, rest.name) && {
-    //               value: {
-    //                 label: rest?.options?.find(
-    //                   (field: any) => field?.value === rest.formik.values[rest.name]
-    //                 )?.label,
-    //                 value: getIn(rest.formik.values, rest.name)
-    //               }
-    //             })}
-    //             error={
-    //               getIn(rest.formik.errors, rest.name) && getIn(rest.formik.touched, rest.name)
-    //                 ? getIn(rest.formik.errors, rest.name)
-    //                 : null
-    //             }
-    //             onBlur={rest.formik.handleBlur}
+        default:
+          return (
+            <Select error={getIn(rest.formik.errors, rest.name)} {...rest} />
+          );
+      }
 
-    //             // onBlur={() => handleBlur('selectedRole')}
-    //           />
-    //           <FormError name={rest.name} formik={rest.formik} helperText={``} />
-    //         </>
-    //       );
+    case "radio-group":
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { variant, ...props } = rest;
 
-    //     default:
-    //       return <SelectOption error={getIn(rest.formik.errors, rest.name)} {...rest} />;
-    //   }
+      return <RadioGroup {...props} />;
 
-    // case 'radio-group':
-    //   const { variant, ...props } = rest;
-    //   switch (variant) {
-    //     case 'custom':
-    //       return <CustomRadioGroup {...props} />;
-    //     case 'choice-group':
-    //       return <ChoiceGroup {...props} />;
-    //     default:
-    //       return <RadioGroup {...props} />;
-    //   }
-    // case 'checkbox-group':
-    //   return <CheckboxGroup {...rest} />;
+    case "checkbox-group":
+      return <CheckboxGroup {...rest} />;
 
     // case 'signature':
     //   return <SignaturePanel ref={signRef} {...rest} />;
