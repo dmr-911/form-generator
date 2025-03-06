@@ -42,6 +42,7 @@ import Textarea from "./components/TextArea";
 import Select from "./components/Select";
 import File from "./components/File";
 import FormError from "./FormError";
+import ToggleSwitch from "./components/ToggleSwitch";
 
 interface ValidationRule {
   type: string;
@@ -871,8 +872,13 @@ export const InputRenderrer = (input: any) => {
 
     case "textarea":
       return <Textarea autoComplete="new-password" {...rest} />;
-    // case 'switch':
-    //   return <ToggleSwitch checked={getIn(rest.formik.values, rest.name)} {...rest} />;
+    case "switch":
+      return (
+        <ToggleSwitch
+          checked={getIn(rest.formik.values, rest.name)}
+          {...rest}
+        />
+      );
     // case 'checkbox':
     //   return <Checkbox checked={getIn(rest.formik.values, rest.name)} {...rest} />;
 
