@@ -6,6 +6,7 @@ import Loader from "../Loader";
 // import { ReIcon } from '@/core/ReIcon/ReIcon';
 import { getIn } from "formik";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import FormError from "../../FormError";
 
 export interface InputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "color">,
@@ -27,7 +28,7 @@ const Password: FC<InputProps> = ({
   formik,
   loading = false,
   className: classes = "",
-  showErrorMessage = false,
+  showErrorMessage = true,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   error: errorProp,
   ...props
@@ -78,6 +79,8 @@ const Password: FC<InputProps> = ({
     setIcon((prev) => !prev);
   };
 
+  console.log("error", error);
+
   return (
     <div className="w-full">
       {!!label && (
@@ -116,7 +119,7 @@ const Password: FC<InputProps> = ({
             } ${size === "sm" && !icon ? "px-2" : ""} ${
               size === "md" && !icon ? "px-3" : ""
             } ${size === "lg" && !icon ? "px-4" : ""} ${
-              error || touchError ? "!border-error-500" : ""
+              error || touchError ? "!border-red-500" : ""
             } ${addon ? "!rounded-s-none" : ""} ${
               loading
                 ? "pointer-events-none !select-none !text-transparent !shadow-none placeholder:!text-transparent"
@@ -146,7 +149,7 @@ const Password: FC<InputProps> = ({
               className={` ${size === "sm" ? "h-3 w-3" : ""} ${
                 size === "md" ? "h-4 w-4" : ""
               } ${size === "lg" ? "h-5 w-5" : ""} ${
-                error ? "!text-error-500" : ""
+                error ? "!text-red-500" : ""
               } `}
             />
           ) : (
@@ -154,7 +157,7 @@ const Password: FC<InputProps> = ({
               className={` ${size === "sm" ? "h-3 w-3" : ""} ${
                 size === "md" ? "h-4 w-4" : ""
               } ${size === "lg" ? "h-5 w-5" : ""} ${
-                error ? "!text-error-500" : ""
+                error ? "!text-red-500" : ""
               } `}
             />
           )}
@@ -184,9 +187,7 @@ const Password: FC<InputProps> = ({
           ""
         )}
         {showErrorMessage && error ? (
-          <span className="mt-0.5 block font-sans text-[0.75rem] text-error-500">
-            {error}
-          </span>
+          <FormError formik={formik} name={props.name || ""} helperText={""} />
         ) : (
           ""
         )}

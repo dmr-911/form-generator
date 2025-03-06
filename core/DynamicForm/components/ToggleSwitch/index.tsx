@@ -19,6 +19,11 @@ const ToggleSwitch: FC<ToggleSwitchProps> = ({
   color,
   className: classes = "",
   supportText,
+  formik,
+  labelText,
+  autoComplete,
+  shape,
+  
   ...props
 }) => {
   // console.log("checked", checked);
