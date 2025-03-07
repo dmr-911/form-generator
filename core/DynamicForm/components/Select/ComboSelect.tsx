@@ -9,6 +9,8 @@ import {
 import Checkbox from "../Checkbox";
 import { cn } from "../../utils/cn";
 import ToggleBox from "../ToggleBox";
+import Button from "../Button";
+import { HiSelector } from "react-icons/hi";
 
 export interface Option {
   label: string;
@@ -357,11 +359,8 @@ function ComboSelect({
             </div>
           </div>
           <ComboboxButton className="absolute inset-y-0 right-0 flex items-center pr-2">
-            <ReIcon
-              iconName="HiSelector"
-              className="h-5 w-5 text-gray-400"
-              aria-hidden="true"
-            />
+
+            <HiSelector className="h-5 w-5 text-gray-400" aria-hidden="true" />
           </ComboboxButton>
         </div>
 

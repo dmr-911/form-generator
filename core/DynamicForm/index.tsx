@@ -13,7 +13,7 @@ import { filterSubmittingValues } from "./utils/filterSubmittingValues";
 import { generateInitialValues } from "./utils/generateInitialValues";
 import { generateValidationSchema } from "./utils/generateValidationSchema";
 import { storeOrSendValueToApi } from "./utils/storeOrSendValueToApi";
-import { cn } from "../DynamicForm/utils/cn";
+import { cn } from "./utils/cn";
 import Input from "./components/Input";
 import Password from "./components/Password";
 import Number from "./components/Number";
@@ -812,30 +812,6 @@ export const InputRenderrer = (input: any) => {
     case "file":
       return (
         <>
-          {/* <div className="col-span-full mx-auto rounded-md">
-            <div className="flex justify-between">
-              <div className="flex flex-col gap-0">
-                <p className="col-span-10 text-muted-500 dark:text-muted-200">
-                  Select Media <span className="text-red-500">*</span>
-                </p>
-                <span className="text-xs text-muted-400">
-                  Allowed Format {rest?.acceptedFileTypes?.join(', ')}
-                </span>
-              </div>
-
-              <Button
-                type="button"
-                color="primary"
-                onClick={() => {
-                  setOpen(!isOpen);
-                }}
-                className="flex h-10 items-center rounded bg-blue-500 px-4 font-bold text-white hover:bg-blue-700"
-              >
-                <ReIcon iconName="AiOutlineCloudUpload" />
-                <span>Upload</span>
-              </Button>
-            </div>
-          </div> */}
 
           <File
             files={rest?.value}
@@ -844,7 +820,7 @@ export const InputRenderrer = (input: any) => {
             setFiles={() => {}}
             multiple={rest?.multiple}
             acceptedFileTypes={["image/png", "image/jpeg", "application/pdf"]}
-            onChange={({ data }) => {
+            onChange={({ data }: { data: any }) => {
               console.log("data of file manager", data);
               rest.formik.setFieldValue(rest.name, data);
             }}
@@ -913,7 +889,7 @@ export const InputRenderrer = (input: any) => {
     case "checkbox-group":
       return <CheckboxGroup {...rest} />;
 
-    case 'signature':
+    case "signature":
       return <SignaturePanel ref={signRef} {...rest} />;
 
     // case 'initials':

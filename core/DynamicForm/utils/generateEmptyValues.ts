@@ -1,4 +1,4 @@
-import { Item } from '../DynamicForm';
+import { Item } from '..';
 
 export const generateEmptyValues = (items: Item[]) => {
   return items.reduce((values, item) => {

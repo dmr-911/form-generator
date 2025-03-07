@@ -243,7 +243,7 @@
 // };
 
 import { getIn } from 'formik';
-import { Item } from '../DynamicForm';
+import { Item } from '..';
 import { getDefaultValue } from './generateInitialValues';
 
 // Helper function to resolve nested field values from a string path (e.g., 'owners[0].marital_status')

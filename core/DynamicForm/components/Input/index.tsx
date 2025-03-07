@@ -44,12 +44,6 @@ const Input: FC<InputProps> = ({
       getIn(formik.errors, props?.name)) ||
       false);
 
-  console.log(
-    "formik error",
-    error,
-    getIn(formik?.touched, props?.name),
-    props.name
-  );
   return (
     <div className="w-full">
       {!!label && (
@@ -136,14 +130,14 @@ const Input: FC<InputProps> = ({
               size === "lg" ? "h-12 w-12" : ""
             }`}
           >
-            <ReIcon
+            {/* <ReIcon
               iconName={icon}
               className={` ${size === "sm" ? "h-3 w-3" : ""} ${
                 size === "md" ? "h-4 w-4" : ""
               } ${size === "lg" ? "h-5 w-5" : ""} ${
                 error ? "!text-error-500" : ""
               } `}
-            />
+            /> */}
           </div>
         ) : (
           ""

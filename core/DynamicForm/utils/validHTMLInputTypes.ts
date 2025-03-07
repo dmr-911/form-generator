@@ -1,4 +1,4 @@
-import { FormData, Item } from '../DynamicForm';
+import { FormData, Item } from '..';
 
 const validHtmlInputTypes = [
   'text',

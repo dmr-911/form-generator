@@ -1,4 +1,4 @@
-import DynamicForm, { FormData } from "./DynamicForm/DynamicForm";
+import DynamicForm, { FormData } from "./DynamicForm";
 
 export { DynamicForm };
 
