@@ -140,10 +140,7 @@ const Password: FC<InputProps> = ({
           }`}
           onClick={handleIconClick}
         >
-          {/* <ReIcon
-            iconName={!icon ? 'FiEye' : 'FiEyeOff'}
-            className={` ${size === 'sm' ? 'h-3 w-3' : ''} ${size === 'md' ? 'h-4 w-4' : ''} ${size === 'lg' ? 'h-5 w-5' : ''} ${error ? '!text-error-500' : ''} `}
-          /> */}
+           
           {!icon ? (
             <FiEye
               className={` ${size === "sm" ? "h-3 w-3" : ""} ${

@@ -1,5 +1,6 @@
 import React, { type FC, useCallback, useEffect, useRef, useState } from 'react';
 import Card from '../Card';
+import { BiChevronRight } from 'react-icons/bi';
 // import { ReIcon } from '@/core/ReIcon/ReIcon';
 
 
@@ -155,7 +156,7 @@ const ToggleBox: FC<ToggleBoxProps> = ({
               : ''
           }`}
         >
-          <ReIcon iconName="BiChevronRight" className="text-2xl text-muted-400" />
+          <BiChevronRight className="text-2xl text-muted-400" />
         </div>
       </div>
       <div

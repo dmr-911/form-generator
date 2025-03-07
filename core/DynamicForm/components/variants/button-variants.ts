@@ -6,13 +6,13 @@ export const buttonVariants = cva(
     variants: {
       color: {
         default: '',
-        secondary: '',
+        secondary: '', // Gray
         muted: '',
-        primary: '',
-        info: '',
-        success: '',
-        warning: '',
-        error: '',
+        primary: '', // Indigo
+        info: '', // Blue
+        success: '', // Green
+        warning: '', // Yellow
+        error: '', // Red
         transparent: ''
       },
       variant: {
@@ -38,14 +38,14 @@ export const buttonVariants = cva(
         secondary: 'hover:enabled:shadow-xl',
         muted: 'hover:enabled:shadow-xl',
         primary:
-          'hover:enabled:shadow-xl hover:enabled:shadow-primary-500 dark:hover:enabled:shadow-primary-800',
-        info: 'hover:enabled:shadow-xl hover:enabled:shadow-info-500/50 dark:hover:enabled:shadow-info-800/20',
+          'hover:enabled:shadow-xl hover:enabled:shadow-indigo-500/50 dark:hover:enabled:shadow-indigo-800/20',
+        info: 'hover:enabled:shadow-xl hover:enabled:shadow-blue-500/50 dark:hover:enabled:shadow-blue-800/20',
         success:
-          'hover:enabled:shadow-xl hover:enabled:shadow-success-500/50 dark:hover:enabled:shadow-success-800/20',
+          'hover:enabled:shadow-xl hover:enabled:shadow-green-500/50 dark:hover:enabled:shadow-green-800/20',
         warning:
-          'hover:enabled:shadow-xl hover:enabled:shadow-warning-500/50 dark:hover:enabled:shadow-warning-800/20',
+          'hover:enabled:shadow-xl hover:enabled:shadow-yellow-500/50 dark:hover:enabled:shadow-yellow-800/20',
         error:
-          'hover:enabled:shadow-xl hover:enabled:shadow-error-500/50 dark:hover:enabled:shadow-error-800/20'
+          'hover:enabled:shadow-xl hover:enabled:shadow-red-500/50 dark:hover:enabled:shadow-red-800/20'
       }
     },
 
@@ -60,7 +60,7 @@ export const buttonVariants = cva(
         color: 'secondary',
         variant: 'solid',
         className:
-          '[&>span>.loader]:text-gray-500 dark:[&>span>.loader]:text-gray-200 bg-secondary hover:enabled:bg-secondary-600 active:enabled:bg-gray-100 hover:enabled:border-gray-300 dark:hover:enabled:border-gray-700 border border-gray-200 dark:border-gray-800 text-gray-800 dark:text-gray-100 dark:bg-gray-950 dark:hover:enabled:bg-gray-900 dark:active:enabled:bg-secondary-950'
+          '[&>span>.loader]:text-gray-500 dark:[&>span>.loader]:text-gray-200 bg-gray-500 hover:enabled:bg-gray-600 active:enabled:bg-gray-100 hover:enabled:border-gray-300 dark:hover:enabled:border-gray-700 border border-gray-200 dark:border-gray-800 text-gray-800 dark:text-gray-100 dark:bg-gray-950 dark:hover:enabled:bg-gray-900 dark:active:enabled:bg-gray-950'
       },
       {
         color: 'muted',
@@ -72,31 +72,31 @@ export const buttonVariants = cva(
         color: 'primary',
         variant: 'solid',
         className:
-          '[&>span>.loader]:text-gray-100 border border-primary-500 bg-primary-500 text-white enabled:hover:bg-primary-600 active:enabled:bg-primary-400'
+          '[&>span>.loader]:text-gray-100 border border-indigo-500 bg-indigo-500 text-white enabled:hover:bg-indigo-600 active:enabled:bg-indigo-400'
       },
       {
         color: 'info',
         variant: 'solid',
         className:
-          '[&>span>.loader]:text-gray-100 border border-info-500 bg-info-500 text-white enabled:hover:bg-info-600 active:enabled:bg-info-400'
+          '[&>span>.loader]:text-gray-100 border border-blue-500 bg-blue-500 text-white enabled:hover:bg-blue-600 active:enabled:bg-blue-400'
       },
       {
         color: 'success',
         variant: 'solid',
         className:
-          '[&>span>.loader]:text-gray-100 border border-success-500 bg-success-500 text-white enabled:hover:bg-success-600 active:enabled:bg-success-400'
+          '[&>span>.loader]:text-gray-100 border border-green-500 bg-green-500 text-white enabled:hover:bg-green-600 active:enabled:bg-green-400'
       },
       {
         color: 'warning',
         variant: 'solid',
         className:
-          '[&>span>.loader]:text-gray-100 border border-warning-500 bg-warning-500 text-white enabled:hover:bg-warning-600 active:enabled:bg-warning-400'
+          '[&>span>.loader]:text-gray-100 border border-yellow-500 bg-yellow-500 text-white enabled:hover:bg-yellow-600 active:enabled:bg-yellow-400'
       },
       {
         color: 'error',
         variant: 'solid',
         className:
-          '[&>span>.loader]:text-gray-100 border border-error-500 bg-error-500 text-white enabled:hover:bg-error-600 active:enabled:bg-error-400'
+          '[&>span>.loader]:text-gray-100 border border-red-500 bg-red-500 text-white enabled:hover:bg-red-600 active:enabled:bg-red-400'
       },
       {
         color: 'default',
@@ -121,31 +121,31 @@ export const buttonVariants = cva(
         color: 'primary',
         variant: 'pastel',
         className:
-          '[&>span>.loader]:text-primary-500 bg-primary-100 dark:bg-primary-900 text-primary-500 enabled:hover:bg-primary-200 dark:enabled:hover:bg-primary-950 active:enabled:bg-primary-100 dark:active:enabled:bg-primary-950'
+          '[&>span>.loader]:text-indigo-500 bg-indigo-100 dark:bg-indigo-900 text-indigo-500 enabled:hover:bg-indigo-200 dark:enabled:hover:bg-indigo-950 active:enabled:bg-indigo-100 dark:active:enabled:bg-indigo-950'
       },
       {
         color: 'info',
         variant: 'pastel',
         className:
-          '[&>span>.loader]:text-info-500 bg-info-500/10 dark:bg-info-500/20 text-info-500 enabled:hover:bg-info-500/20 dark:enabled:hover:bg-info-500/30 active:enabled:bg-info-500/10 dark:active:enabled:bg-info-500/10'
+          '[&>span>.loader]:text-blue-500 bg-blue-500/10 dark:bg-blue-500/20 text-blue-500 enabled:hover:bg-blue-500/20 dark:enabled:hover:bg-blue-500/30 active:enabled:bg-blue-500/10 dark:active:enabled:bg-blue-500/10'
       },
       {
         color: 'success',
         variant: 'pastel',
         className:
-          '[&>span>.loader]:text-success-500 bg-success-500/10 dark:bg-success-500/20 text-success-500 enabled:hover:bg-success-500/20 dark:enabled:hover:bg-success-500/30 active:enabled:bg-success-500/10 dark:active:enabled:bg-success-500/10'
+          '[&>span>.loader]:text-green-500 bg-green-500/10 dark:bg-green-500/20 text-green-500 enabled:hover:bg-green-500/20 dark:enabled:hover:bg-green-500/30 active:enabled:bg-green-500/10 dark:active:enabled:bg-green-500/10'
       },
       {
         color: 'warning',
         variant: 'pastel',
         className:
-          '[&>span>.loader]:text-warning-500 bg-warning-500/10 dark:bg-warning-500/20 text-warning-500 enabled:hover:bg-warning-500/20 dark:enabled:hover:bg-warning-500/30 active:enabled:bg-warning-500/10 dark:active:enabled:bg-warning-500/10'
+          '[&>span>.loader]:text-yellow-500 bg-yellow-500/10 dark:bg-yellow-500/20 text-yellow-500 enabled:hover:bg-yellow-500/20 dark:enabled:hover:bg-yellow-500/30 active:enabled:bg-yellow-500/10 dark:active:enabled:bg-yellow-500/10'
       },
       {
         color: 'error',
         variant: 'pastel',
         className:
-          '[&>span>.loader]:text-error-500 bg-error-500/10 dark:bg-error-500/20 text-error-500 enabled:hover:bg-error-500/20 dark:enabled:hover:bg-error-500/30 active:enabled:bg-error-500/10 dark:active:enabled:bg-error-500/10'
+          '[&>span>.loader]:text-red-500 bg-red-500/10 dark:bg-red-500/20 text-red-500 enabled:hover:bg-red-500/20 dark:enabled:hover:bg-red-500/30 active:enabled:bg-red-500/10 dark:active:enabled:bg-red-500/10'
       },
       {
         color: 'default',
@@ -169,50 +169,50 @@ export const buttonVariants = cva(
         color: 'primary',
         variant: 'outlined',
         className:
-          '[&>span>.loader]:text-primary-500 border border-primary-500 text-primary-500 hover:bg-primary-500 active:enabled:bg-primary-400 hover:text-white'
+          '[&>span>.loader]:text-indigo-500 border border-indigo-500 text-indigo-500 hover:bg-indigo-500 active:enabled:bg-indigo-400 hover:text-white'
       },
       {
         color: 'info',
         variant: 'outlined',
         className:
-          '[&>span>.loader]:text-info-500 border border-info-500 text-info-500 hover:bg-info-500 active:enabled:bg-info-400 hover:text-white'
+          '[&>span>.loader]:text-blue-500 border border-blue-500 text-blue-500 hover:bg-blue-500 active:enabled:bg-blue-400 hover:text-white'
       },
       {
         color: 'success',
         variant: 'outlined',
         className:
-          'border border-success-500 text-success-500 hover:bg-success-500 active:enabled:bg-success-400 hover:text-white'
+          'border border-green-500 text-green-500 hover:bg-green-500 active:enabled:bg-green-400 hover:text-white'
       },
       {
         color: 'warning',
         variant: 'outlined',
         className:
-          '[&>span>.loader]:text-warning-500 border border-warning-500 text-warning-500 hover:bg-warning-500 active:enabled:bg-warning-400 hover:text-white'
+          '[&>span>.loader]:text-yellow-500 border border-yellow-500 text-yellow-500 hover:bg-yellow-500 active:enabled:bg-yellow-400 hover:text-white'
       },
       {
         color: 'error',
         variant: 'outlined',
         className:
-          '[&>span>.loader]:text-error-500 border border-error-500 text-error-500 hover:bg-error-500 active:enabled:bg-error-400 hover:text-white'
+          '[&>span>.loader]:text-red-500 border border-red-500 text-red-500 hover:bg-red-500 active:enabled:bg-red-400 hover:text-white'
       },
       //transparent
       {
         color: 'transparent',
         variant: 'solid',
         className:
-          '[&>span>.loader]:text-muted-500 bg-transparent text-muted-500 hover:enabled:text-primary-500 active:enabled:bg-muted-200/20'
+          '[&>span>.loader]:text-gray-500 bg-transparent text-gray-500 hover:enabled:text-indigo-500 active:enabled:bg-gray-200/20'
       },
       {
         color: 'transparent',
         variant: 'pastel',
         className:
-          '[&>span>.loader]:text-muted-500 bg-transparent text-muted-500 hover:enabled:text-primary-500 active:enabled:bg-muted-200/20'
+          '[&>span>.loader]:text-gray-500 bg-transparent text-gray-500 hover:enabled:text-indigo-500 active:enabled:bg-gray-200/20'
       },
       {
         color: 'transparent',
         variant: 'outlined',
         className:
-          '[&>span>.loader]:text-muted-500 bg-transparent border border-muted-300 text-muted-500 hover:enabled:text-primary-500 active:enabled:bg-muted-200/20'
+          '[&>span>.loader]:text-gray-500 bg-transparent border border-gray-300 text-gray-500 hover:enabled:text-indigo-500 active:enabled:bg-gray-200/20'
       }
     ],
 

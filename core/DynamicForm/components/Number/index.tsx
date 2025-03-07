@@ -169,10 +169,10 @@ const Number: FC<InputProps> = ({
           <div
             className={`absolute start-0 top-0 z-0 flex items-center justify-center text-muted-400 transition-colors duration-300 peer-focus-visible:text-primary-500 dark:text-muted-500 ${size === 'sm' ? 'h-8 w-8' : ''} ${size === 'md' ? 'h-10 w-10' : ''} ${size === 'lg' ? 'h-12 w-12' : ''}`}
           >
-            <ReIcon
+            {/* <ReIcon
               iconName={icon}
               className={`${size === 'sm' ? 'h-3 w-3' : ''} ${size === 'md' ? 'h-4 w-4' : ''} ${size === 'lg' ? 'h-5 w-5' : ''} ${error ? '!text-error-500' : ''}`}
-            />
+            /> */}
           </div>
         )}
         {loading && (
