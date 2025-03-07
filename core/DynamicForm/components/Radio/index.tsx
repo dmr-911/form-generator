@@ -1,7 +1,6 @@
 import React, { type FC } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { radioVariants } from "../variants/radio-variants";
-import { BsFillCircleFill } from "react-icons/bs";
 
 interface RadioProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "color">,
@@ -11,30 +10,32 @@ interface RadioProps
 
 const Radio: FC<RadioProps> = ({
   id,
-  type,
-  color,
+  color = "gray",
   label,
   className: classes = "",
   ...props
 }) => {
   return (
-    <div
-      className={`radio-${
-        color || "default"
-      } relative inline-block cursor-pointer leading-tight`}
-    >
+    <div className="relative inline-block cursor-pointer leading-tight">
       <label htmlFor={id} className="flex items-center">
-        <span className="shrink-0 relative flex h-5 w-5 items-center justify-center overflow-hidden rounded-full border border-muted-300 bg-muted-100 text-white transition-shadow duration-300 dark:border-muted-700 dark:bg-muted-800">
+        <div className="relative">
+          {/* Hidden input */}
           <input
             id={id}
             type="radio"
-            className={`peer absolute top-0 start-0 z-[3] h-full w-full cursor-pointer appearance-none ${classes}`}
+            className={`absolute opacity-0 w-5 h-5 z-10 cursor-pointer ${classes}`}
             {...props}
           />
-          <BsFillCircleFill className={radioVariants({ color })} />
-          <span className="absolute top-0 start-0 z-[1] block h-full w-full scale-0 rounded-full bg-white transition-transform duration-300 peer-checked:scale-[1.1] peer-checked:rounded-[.35rem] dark:bg-muted-900"></span>
-        </span>
-        <span className="ms-2 cursor-pointer text-[.9rem] text-muted-400">
+          
+          {/* Visible radio circle */}
+          <div className="w-5 h-5 rounded-full border border-muted-300 bg-muted-100 dark:border-muted-700 dark:bg-muted-800 flex items-center justify-center">
+            {/* Inner circle that appears when checked */}
+            <div className={`w-2.5 h-2.5 rounded-full scale-0 transition-transform duration-200 ${props.checked ? "scale-100" : ""} ${color ? `bg-${color}-500` : "bg-green-500"}`}></div>
+          </div>
+        </div>
+        
+        {/* Label */}
+        <span className="ml-2 text-[.9rem] text-muted-400">
           {label}
         </span>
       </label>

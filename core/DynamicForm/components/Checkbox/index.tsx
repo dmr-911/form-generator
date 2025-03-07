@@ -1,67 +1,94 @@
-import React, { type FC } from 'react';
-import type { VariantProps } from 'class-variance-authority';
-// import { ReIcon } from '@/core/ReIcon/ReIcon';
-// import {DyIcon} from 'react-icons/di'
-import { replaceUnderscoresWithSpaces } from '../../utils';
+import React, { useState } from 'react';
 import { GoCheck } from 'react-icons/go';
-import { checkboxVariants } from '../variants/checkbox-variants';
+import { replaceUnderscoresWithSpaces } from '../../utils';
 
-export interface CheckboxProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'color'>,
-    VariantProps<typeof checkboxVariants> {
+export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  icon?: string;
-  supportText?: any;
-  formik?: any;
-  dependsEnabled?: boolean;
+  color?: 'primary' | 'info' | 'success' | 'warning' | 'danger' | 'default';
+  shape?: 'rounded' | 'smooth' | 'curved' | 'full';
+  supportText?: React.ReactNode;
 }
 
-const Checkbox: FC<CheckboxProps> = ({
+const Checkbox: React.FC<CheckboxProps> = ({
   id,
-  color = 'default',
+  color = 'primary',
   shape = 'smooth',
   label,
-  icon,
-  className: classes = '',
   supportText,
   disabled,
-  formik,
-  dependsEnabled,
+  checked: controlledChecked,
+  defaultChecked,
+  onChange,
   ...props
 }) => {
-  // const checkboxId = label.toLocaleLowerCase().replaceAll(" ", "-");
-  const dyIcon = icon ? icon : 'GoCheck';
+  // Handle both controlled and uncontrolled components
+  const [internalChecked, setInternalChecked] = useState(defaultChecked || false);
+  const isChecked = controlledChecked !== undefined ? controlledChecked : internalChecked;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (controlledChecked === undefined) {
+      setInternalChecked(e.target.checked);
+    }
+    if (onChange) {
+      onChange(e);
+    }
+  };
+
+  // Define background colors based on the color prop
+  const bgColor = {
+    primary: 'bg-blue-500',
+    info: 'bg-cyan-500',
+    success: 'bg-green-500',
+    warning: 'bg-yellow-500',
+    danger: 'bg-red-500',
+    default: 'bg-gray-500'
+  }[color];
+
+  // Define border radius based on the shape prop
+  const borderRadius = {
+    rounded: 'rounded',
+    smooth: 'rounded-md',
+    curved: 'rounded-lg',
+    full: 'rounded-full'
+  }[shape];
+
   return (
-    <div className="flex h-full justify-between">
-      <div
-        className={`checkbox-${
-          color || 'default'
-        } relative inline-block cursor-pointer overflow-hidden leading-tight`}
-      >
-        <label htmlFor={id} className="flex items-start">
-          <span
-            className={`relative flex h-5 w-5 shrink-0 items-center justify-center overflow-hidden border-2 border-muted-300 bg-muted-100 transition-shadow duration-300 dark:border-muted-700 dark:bg-muted-800 ${shape === 'rounded' ? 'rounded' : ''} ${shape === 'smooth' ? 'rounded-md' : ''} ${shape === 'curved' ? 'rounded-lg' : ''} ${shape === 'full' ? 'rounded-full' : ''} ${color === 'primary' ? 'focus-within:border-primary-500/20' : ''} ${color === 'info' ? 'focus-within:border-info-500/20' : ''} ${color === 'success' ? 'focus-within:border-success-500/20' : ''} ${color === 'warning' ? 'focus-within:border-warning-500/20' : ''} ${color === 'danger' ? 'focus-within:border-error-500/20' : ''} `}
+    <div className="flex items-start space-x-2">
+      <div className="relative flex items-center">
+        {/* Hidden real checkbox */}
+        <input
+          id={id}
+          type="checkbox"
+          className="absolute h-5 w-5 opacity-0"
+          checked={isChecked}
+          onChange={handleChange}
+          disabled={disabled}
+          {...props}
+        />
+
+        {/* Custom checkbox */}
+        <div
+          className={`h-5 w-5 flex items-center justify-center border-2 border-gray-300 ${
+            borderRadius
+          } ${disabled ? 'opacity-50' : ''}`}
+        >
+          <div
+            className={`h-4 w-4 flex items-center justify-center ${bgColor} ${borderRadius} transform ${
+              isChecked ? 'scale-100' : 'scale-0'
+            } transition-transform duration-200`}
           >
-            <input
-              id={id}
-              type="checkbox"
-              className={`peer absolute start-0 top-0 z-[3] h-full w-full cursor-pointer appearance-none ${classes}`}
-              {...props}
-            />
-            <GoCheck
-            //   iconName={dyIcon}
-              className={`relative start-0 z-[2] h-3 w-3 translate-y-5 scale-0 transition-transform delay-150 duration-300 peer-checked:translate-y-0 peer-checked:scale-100 ${color === 'default' ? 'text-muted-700 dark:text-muted-100' : 'text-white'} `}
-            />
-            <span className={`${checkboxVariants({ color, shape })}`}></span>
-          </span>
-          {label && (
-            <span className="ms-2 cursor-pointer font-sans text-sm text-muted-500 dark:text-muted-400">
-              {typeof label === 'object' ? label : replaceUnderscoresWithSpaces(label)}
-            </span>
-          )}
-        </label>
+            <GoCheck className="text-white text-sm" />
+          </div>
+        </div>
       </div>
-      {supportText ? supportText : null}
+
+      {label && (
+        <label htmlFor={id} className="cursor-pointer text-sm text-gray-600">
+          {typeof label === 'object' ? label : replaceUnderscoresWithSpaces(label)}
+        </label>
+      )}
+
+      {supportText && <div className="text-sm text-gray-500">{supportText}</div>}
     </div>
   );
 };

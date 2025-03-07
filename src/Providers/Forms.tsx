@@ -5,14 +5,24 @@ import Link from "next/link";
 
 const data = [
     {
-        id: 1,
+        id: 0,
         href: "/",
         name: "Initial Demo"
     },
     {
-        id: 2,
+        id: 1,
         href: "/demo-1",
         name: "Demo-1"
+    },
+    {
+        id: 2,
+        href: "/demo-2",
+        name: "Demo-2"
+    },
+    {
+        id: 3,
+        href: "/demo-3",
+        name: "Demo-3"
     },
 ];
 

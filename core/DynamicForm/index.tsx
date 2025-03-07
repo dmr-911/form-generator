@@ -25,9 +25,10 @@ import FormError from "./FormError";
 import ToggleSwitch from "./components/ToggleSwitch";
 import Checkbox from "./components/Checkbox";
 import ComboSelect from "./components/Select/ComboSelect";
-import { RadioGroup } from "@headlessui/react";
+
 import CheckboxGroup from "./components/CheckboxGroup";
 import SignaturePanel from "./components/SignaturePanel";
+import RadioGroup from "./components/RadioGroup";
 
 interface ValidationRule {
   type: string;
