@@ -103,6 +103,28 @@ const DemoThree = () => {
         },
         // suffix: <ReIcon iconName="TbWorld" className="h-5 w-5 text-muted-500" />
       },
+      {
+        index: 10,
+        widths: {
+          default: '100%',
+          greaterThan1440: '100%',
+          between890And1440: '100%',
+          between600And890: '100%'
+        },
+        size: 'md',
+        color: 'default',
+        shape: 'smooth',
+        type: 'file',
+        multiple: false,
+        id: 'file',
+        label: 'Upload Organization Document',
+        name: 'file',
+        placeholder: '',
+        validation: {
+          type: 'array',
+          validations: {}
+        }
+      }
     ],
   };
   return (

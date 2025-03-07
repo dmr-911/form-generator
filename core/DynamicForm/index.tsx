@@ -813,18 +813,12 @@ export const InputRenderrer = (input: any) => {
     case "file":
       return (
         <>
-
           <File
             files={rest?.value}
-            open={isOpen}
-            setOpen={setOpen}
-            setFiles={() => {}}
+            name={rest?.name}
+            formik={rest?.formik}
             multiple={rest?.multiple}
             acceptedFileTypes={["image/png", "image/jpeg", "application/pdf"]}
-            onChange={({ data }: { data: any }) => {
-              console.log("data of file manager", data);
-              rest.formik.setFieldValue(rest.name, data);
-            }}
           />
           <FormError formik={rest.formik} name={rest.name} helperText={``} />
         </>
