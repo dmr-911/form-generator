@@ -129,16 +129,13 @@ const DemoOne = () => {
   };
   return (
     <DynamicForm formData={signUpFormData}>
-      <div className="col-span-full mt-3">
-        <Button
-          type="submit"
-          color="primary"
-          shape="rounded"
-          className="!h-11 w-full uppercase"
-        >
-          Signup Now
-        </Button>
-      </div>
+        <div className="col-span-full mt-3">
+          <button
+          
+          className="!h-11 w-full uppercase bg-blue-400 text-white">
+            Sign Up
+          </button>
+        </div>
     </DynamicForm>
   );
 };

@@ -81,18 +81,13 @@ const PageTwo = () => {
   };
   return (
     <DynamicForm formData={setNewPasswordData}>
-      <div className="col-span-full mt-6">
-        <div className="block w-full rounded-md shadow-sm">
-          <Button
-            type="submit"
-            color="primary"
-            shape="rounded"
-            className="!h-11 w-full"
-          >
+        <div className="col-span-full mt-3">
+          <button
+          
+          className="!h-11 w-full uppercase bg-red-400 text-white">
             Save
-          </Button>
+          </button>
         </div>
-      </div>
     </DynamicForm>
   );
 };

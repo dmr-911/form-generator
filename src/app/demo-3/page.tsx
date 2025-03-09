@@ -221,10 +221,12 @@ const DemoThree = () => {
         <Button color="muted" shape="smooth" size="sm" type="button">
           Cancel
         </Button>
-        <Button color="primary" shape="smooth" size="sm" type="submit">
-          Submit
-        </Button>
-      </div>
+          <button
+          
+          className="!h-10 w-full uppercase bg-red-400 text-white">
+            Submit
+          </button>
+        </div>
     </DynamicForm>
   );
 };
