@@ -1,4 +1,6 @@
+import { getIn } from "formik";
 import React, { useState, useRef, ChangeEvent, DragEvent, JSX } from "react";
+import FormError from "../../FormError";
 
 // Define interfaces for our file object
 interface FileObject {
@@ -393,10 +395,14 @@ const FileUploader: React.FC<FileUploaderProps> = ({
     );
   };
 
+  let formikError = formik
+    ? (getIn(formik.touched, name) && getIn(formik.errors, name)) || false
+    : false;
+
   return (
-    <div className="max-w-full mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-full mx-auto rounded-lg shadow-md">
       <div className="mb-5">
-        <h2 className="text-xl font-semibold text-gray-800">Upload Files</h2>
+        <h2>Upload Files</h2>
         <p className="text-sm text-gray-500 mt-1">
           {allowedFileTypes.length > 0
             ? `Allowed formats: ${allowedFileTypes.join(", ")}`
@@ -411,6 +417,13 @@ const FileUploader: React.FC<FileUploaderProps> = ({
           ${
             dragActive
               ? "border-blue-500 bg-blue-50"
+              : "border-gray-300 bg-gray-50 hover:bg-gray-100"
+          }
+              
+          
+          ${
+            formikError
+              ? "border-red-500 bg-red-50"
               : "border-gray-300 bg-gray-50 hover:bg-gray-100"
           }`}
         onDragEnter={handleDragEnter}
@@ -472,6 +485,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
           </div>
         </div>
       )}
+      <FormError formik={formik} name={name} helperText={``} />
 
       {/* File list */}
       {files.length > 0 && (
@@ -491,6 +505,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                   setFiles([]);
                   setPreviewFile(null);
                 }}
+                type="button"
               >
                 Remove all
               </button>
@@ -540,6 +555,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                     }}
                     aria-label="Preview file"
                     disabled={!file.uploaded}
+                    type="button"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

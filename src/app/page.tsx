@@ -109,7 +109,9 @@ const SingUpForm = () => {
         // setRealTimeValues={(data) => setOnChangeFormData(data)}
       >
         <div className="col-span-full mt-3">
-          <button className="!h-11 w-full uppercase bg-red-400 text-white">
+          <button
+          
+          className="!h-11 w-full uppercase bg-red-400 text-white">
             Signup Now
           </button>
         </div>

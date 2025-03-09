@@ -820,7 +820,7 @@ export const InputRenderrer = (input: any) => {
             multiple={rest?.multiple}
             acceptedFileTypes={["image/png", "image/jpeg", "application/pdf"]}
           />
-          <FormError formik={rest.formik} name={rest.name} helperText={``} />
+          
         </>
       );
 
@@ -870,6 +870,8 @@ export const InputRenderrer = (input: any) => {
           );
 
         default:
+
+        return null
           return (
             <Select error={getIn(rest.formik.errors, rest.name)} {...rest} />
           );

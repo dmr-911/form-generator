@@ -3,6 +3,7 @@ import React, { useEffect, useState, type FC, type SelectHTMLAttributes } from '
 import type { VariantProps } from 'class-variance-authority';
 import Loader from '../Loader';
 import { selectVariants } from '../variants/select-variants';
+import FormError from '../../FormError';
 
 interface Option {
   label: string;

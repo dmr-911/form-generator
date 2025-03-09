@@ -34,6 +34,7 @@ const Button: FC<ButtonProps> = ({
         } ${classes}`
       })}
       {...props}
+      type='button'
     >
       {children}
       {loading ? (

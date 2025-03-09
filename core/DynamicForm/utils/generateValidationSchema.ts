@@ -1,21 +1,27 @@
-import { getYupValidation } from './getYupValidation';
-import * as Yup from 'yup';
+import { getYupValidation } from "./getYupValidation";
+import * as Yup from "yup";
 
 export const generateValidationSchema = (items, values, update) => {
   const buildSchema = (items, bValues) => {
     return items?.reduce((schema, item) => {
       let validator = getYupValidation(
-        item?.validation?.type || 'string',
+        item?.validation?.type || "string",
         item?.validation?.validations || {},
         item?.multiple
       );
 
       if (item.matches) {
-        validator = validator.matches(new RegExp(item.matches), 'Invalid value');
+        validator = validator.matches(
+          new RegExp(item.matches),
+          "Invalid value"
+        );
       }
 
       if (item.oneOf) {
-        validator = validator.oneOf([Yup.ref(item.oneOf), null], 'Passwords must match');
+        validator = validator.oneOf(
+          [Yup.ref(item.oneOf), null],
+          "Passwords must match"
+        );
       }
 
       if (item.required) {
@@ -23,21 +29,20 @@ export const generateValidationSchema = (items, values, update) => {
       }
 
       if (item?.requiredEnabled) {
-        console.log('yup validation required enabled', item);
-        const evaluateRule = (rule) => {
+        const evaluateRule = (rule: any) => {
           const { name, operator, value } = rule || {};
           const fieldValue = values[name];
 
           switch (operator) {
-            case 'eq':
+            case "eq":
               return fieldValue === value;
-            case 'gt':
+            case "gt":
               return fieldValue > value;
-            case 'lt':
+            case "lt":
               return fieldValue < value;
-            case 'contains':
+            case "contains":
               return fieldValue?.includes(value);
-            case 'includes':
+            case "includes":
               return value?.includes(fieldValue);
             default:
               return false;
@@ -50,18 +55,21 @@ export const generateValidationSchema = (items, values, update) => {
               ? evaluateRules(rule.condition, rule.rules) // Recursively evaluate nested rules
               : evaluateRule(rule); // Evaluate the individual rule
 
-            if (condition === 'AND') {
+            if (condition === "AND") {
               return acc && ruleResult;
-            } else if (condition === 'OR') {
+            } else if (condition === "OR") {
               return acc || ruleResult;
             }
             return acc;
-          }, condition === 'AND'); // Initialize accumulator based on condition
+          }, condition === "AND"); // Initialize accumulator based on condition
         };
 
         const isValid =
           item?.requiredEnabled &&
-          evaluateRules(item?.requiredEnabled?.condition, item?.requiredEnabled?.rules);
+          evaluateRules(
+            item?.requiredEnabled?.condition,
+            item?.requiredEnabled?.rules
+          );
 
         /* The line `console.log("isValid", isValid, item.name);` is logging the values of `isValid`
         and `item.name` to the console for debugging purposes. This can help in understanding the
@@ -79,15 +87,21 @@ export const generateValidationSchema = (items, values, update) => {
       }
 
       // Handle repeater tag
-      if (item.tag === 'repeater' && item.form.items) {
-        const nestedSchema = buildSchema(item?.form?.items, bValues[item.name] || []);
+      if (item.tag === "repeater" && item.form.items) {
+        const nestedSchema = buildSchema(
+          item?.form?.items,
+          bValues[item.name] || []
+        );
         validator = validator?.of(Yup.object().shape(nestedSchema));
       }
 
       // Handle group tag
-      if (item.tag === 'group' && item.form?.items) {
-        const nestedSchema = buildSchema(item?.form?.items, bValues[item.name] || {});
-        console.log('nestedSchema', nestedSchema);
+      if (item.tag === "group" && item.form?.items) {
+        const nestedSchema = buildSchema(
+          item?.form?.items,
+          bValues[item.name] || {}
+        );
+        console.log("nestedSchema", nestedSchema);
         validator = Yup.object().shape(nestedSchema); // Group fields are an object
       }
 
