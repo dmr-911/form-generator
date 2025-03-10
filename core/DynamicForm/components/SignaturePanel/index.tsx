@@ -1,8 +1,6 @@
 "use client";
 import React, {
-  forwardRef,
   useEffect,
-  useImperativeHandle,
   useRef,
   useState,
 } from "react";
@@ -21,6 +19,8 @@ const SignaturePanel = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onSignatureEnd,
   formik,
+  labelPosition = "above",
+  labelClassName = "text-sm",
   ...props
 }: SignaturePenalProps) => {
   // Forward the ref to the parent component
@@ -68,8 +68,39 @@ const SignaturePanel = ({
     }
   };
 
+    // Render the label based on the labelPosition prop
+    const renderLabel = () => {
+      const defaultLabelClass = "text-sm font-medium";
+      
+      switch (labelPosition) {
+        case "above":
+          return (
+            <label 
+              htmlFor={props.name} 
+              className={`block mb-2 ${defaultLabelClass} ${labelClassName}`}
+            >
+              {props.label}
+            </label>
+          );
+        case "top-center":
+          return (
+            <div className={`bg-primary-500 dark:bg-muted-600 text-white py-1 px-4 absolute rounded-lg top-2 left-1/2 transform -translate-x-1/2 select-none ${labelClassName}`}>
+              {props.label}
+            </div>
+          );
+        case "top-left":
+        default:
+          return (
+            <div className={`bg-primary-500 dark:bg-muted-600 text-white py-1 px-2 absolute rounded-lg top-2 left-2 select-none ${labelClassName}`}>
+              {props.label}
+            </div>
+          );
+      }
+    };
+
   return (
     <div className="w-full relative mr-4 rounded-lg">
+      {labelPosition === "above" && renderLabel()}
       <SignaturePad
         ref={ref}
         onEnd={() => handleSignatureEnd(props.name, ref)}
@@ -91,12 +122,12 @@ const SignaturePanel = ({
           handleSignatureEnd(props.name, ref);
           formik && formik.setFieldValue(props.name, "");
         }}
-        className="w-full mt-4"
+        className="w-full mt-2 text-sm cursor-pointer"
         type="button"
       >
         Clear and draw again
       </button>
-      <div className="bg-primary-500 dark:bg-muted-600 text-white py-1 px-2 absolute rounded-lg top-2 left-2 select-none">
+      <div className="dark:bg-muted-600 text-white py-1 px-2 absolute rounded-lg top-2 left-2 select-none">
         {props.label}
       </div>
     </div>

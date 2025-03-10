@@ -105,7 +105,7 @@ const SingUpForm = () => {
     <div>
       <DynamicForm
         formData={signUpFormData}
-        isRealTime
+        // isRealTime
         // setRealTimeValues={(data) => setOnChangeFormData(data)}
       >
         <div className="col-span-full mt-3">

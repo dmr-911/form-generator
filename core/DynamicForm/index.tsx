@@ -777,16 +777,12 @@ const DynamicForm = ({
 export default DynamicForm;
 
 export const InputRenderrer = (input: any) => {
-  const [isOpen, setOpen] = useState(false);
   const signRef = useRef(null);
-  const initialsRef = useRef(null);
   const { type, ...rest } = input || {};
   switch (type) {
     case "email":
       return <Input type="email" {...rest} autoComplete="new-password" />;
     case "password":
-      // return <Input type="password" {...rest} />;
-      // return <Input type="password" {...rest} />;
       return <Password type="password" {...rest} autoComplete="new-password" />;
     // case 'phone':
     //   return <Phone {...rest} />;
@@ -794,21 +790,6 @@ export const InputRenderrer = (input: any) => {
       return <Number type="number" {...rest} />;
     case "select":
       return <Select {...rest} />;
-
-    // case 'document-editor':
-    //   return (
-    //     <div>
-    //       <label htmlFor={rest?.name} className="truncate font-sans text-[.85rem] text-muted-400">
-    //         {rest?.label}
-    //       </label>
-    //       <DocumentBuilder
-    //         initialHtmlString={rest?.value}
-    //         setValue={(e: string) => {
-    //           rest.formik.setFieldValue(rest.name, e);
-    //         }}
-    //       />
-    //     </div>
-    //   );
 
     case "file":
       return (
@@ -820,7 +801,6 @@ export const InputRenderrer = (input: any) => {
             multiple={rest?.multiple}
             acceptedFileTypes={["image/png", "image/jpeg", "application/pdf"]}
           />
-          
         </>
       );
 
@@ -870,8 +850,6 @@ export const InputRenderrer = (input: any) => {
           );
 
         default:
-
-        return null
           return (
             <Select error={getIn(rest.formik.errors, rest.name)} {...rest} />
           );
@@ -887,48 +865,10 @@ export const InputRenderrer = (input: any) => {
       return <CheckboxGroup {...rest} />;
 
     case "signature":
-      return <SignaturePanel ref={signRef} {...rest} />;
+      return <SignaturePanel {...rest} />;
 
-    // case 'initials':
-    //   return <SignaturePanel ref={initialsRef} {...rest} />;
 
     default:
-      switch (input.variant) {
-        case "address-autocomplete":
-          return null;
-        // return (
-        //   <>
-        //     <SearchAddressWithAutocomplete
-        //       label={rest?.label}
-        //       errors={rest?.formik?.errors}
-        //       name={rest?.name}
-        //       formik={rest?.formik}
-        //       withMap={rest?.withMap}
-        //       onChange={(values, fullAddress) => {
-        //         if (values?.latitude) {
-        //           // Only update if the new values are different
-        //           Object.keys(values || {}).forEach((key) => {
-        //             if (rest?.formik?.values?.[key] !== values[key]) {
-        //               rest?.formik?.setFieldValue(key, values[key]);
-        //             }
-        //           });
-        //         }
-
-        //         // Set the full address if it exists and is different
-        //         if (fullAddress && rest?.formik?.values?.[rest.name] !== fullAddress) {
-        //           rest.formik.setFieldValue(rest.name, fullAddress);
-        //         }
-        //       }}
-        //       error={rest?.formik?.errors?.[rest?.name] && rest?.formik?.touched?.[rest?.name]}
-        //       onBlur={rest?.formik?.handleBlur}
-        //       defaultValue={rest?.formik?.values?.[rest?.name]}
-        //     />
-        //     <FormError name={rest?.name} formik={rest?.formik} helperText={``} />
-        //   </>
-        // );
-
-        default:
-          return <Input type={type} {...rest} autoComplete="new-password" />;
-      }
+      return <Input type={type} {...rest} autoComplete="new-password" />;
   }
 };

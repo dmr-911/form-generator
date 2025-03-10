@@ -68,10 +68,10 @@ const DemoThree = () => {
         label: "Domain",
         name: "domain",
         loading: false,
-        // depends: {
-        //   condition: "AND",
-        //   rules: [{ name: "domain-type", operator: "eq", value: "domain" }],
-        // },
+        depends: {
+          condition: "AND",
+          rules: [{ name: "domain-type", operator: "eq", value: "domain" }],
+        },
         requiredEnabled: {
           condition: "AND",
           rules: [{ name: "domain-type", operator: "eq", value: "domain" }],
@@ -93,10 +93,10 @@ const DemoThree = () => {
         id: "sub-domain",
         label: "Sub Domain",
         name: "sub-domain",
-        // depends: {
-        //   condition: "AND",
-        //   rules: [{ name: "domain-type", operator: "eq", value: "sub-domain" }],
-        // },
+        depends: {
+          condition: "AND",
+          rules: [{ name: "domain-type", operator: "eq", value: "sub-domain" }],
+        },
         requiredEnabled: {
           condition: "AND",
           rules: [{ name: "domain-type", operator: "eq", value: "sub-domain" }],
