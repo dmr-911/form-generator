@@ -7,7 +7,7 @@ import FormError from "../../FormError";
 import { inputVariants } from "../variants/input-variants";
 
 export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "color">,
+extends Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "color" | "prefix">,
     VariantProps<typeof inputVariants> {
   icon?: string;
   label?: string;
@@ -38,11 +38,10 @@ const Input: FC<InputProps> = ({
   prefix,
   ...props
 }) => {
-  let error =
-    forceError ??
-    ((getIn(formik?.touched, props?.name) &&
-      getIn(formik.errors, props?.name)) ||
-      false);
+  let error: any = forceError ?
+  (props?.name && getIn(formik?.touched, props?.name) && getIn(formik.errors, props?.name)) ||
+  false : false;
+
 
   return (
     <div className="w-full">

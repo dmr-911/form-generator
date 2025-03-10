@@ -27,7 +27,7 @@ const Textarea: FC<TextAreaProps> = ({
   ...props
 }) => {
   let error = formik
-    ? (getIn(formik.touched, props.name) && getIn(formik.errors, props.name)) || false
+    ? (getIn(formik.touched, (props?.name || "")) && getIn(formik.errors, (props?.name || ""))) || false
     : false;
   return (
     <div className="w-full font-sans">

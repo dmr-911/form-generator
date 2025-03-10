@@ -69,12 +69,12 @@ const Password: FC<InputProps> = ({
     }
   };
 
-  let error =
-    (getIn(formik?.touched, props?.name) &&
-      getIn(formik.errors, props?.name)) ||
+  let error: any =
+    (getIn(formik?.touched, props?.name || "") &&
+      getIn(formik.errors, props?.name || "")) ||
     false;
 
-  const handleIconClick = (e) => {
+  const handleIconClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIcon((prev) => !prev);
   };
@@ -140,7 +140,6 @@ const Password: FC<InputProps> = ({
           }`}
           onClick={handleIconClick}
         >
-           
           {!icon ? (
             <FiEye
               className={` ${size === "sm" ? "h-3 w-3" : ""} ${

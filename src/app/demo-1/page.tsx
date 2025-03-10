@@ -1,7 +1,7 @@
 "use client"
 import React from "react";
-import { FormData, DynamicForm } from "../../../core";
-import Button from "../../../core/DynamicForm/components/Button";
+import DynamicForm from "@/index"
+import { FormData } from "../../../core";
 
 const DemoOne = () => {
   const signUpFormData: FormData = {

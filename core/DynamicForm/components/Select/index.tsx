@@ -1,9 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, type FC, type SelectHTMLAttributes } from 'react';
-import type { VariantProps } from 'class-variance-authority';
-import Loader from '../Loader';
-import { selectVariants } from '../variants/select-variants';
-import FormError from '../../FormError';
+import React, {
+  useEffect,
+  useState,
+  type FC,
+  type SelectHTMLAttributes,
+} from "react";
+import type { VariantProps } from "class-variance-authority";
+import Loader from "../Loader";
+import { selectVariants } from "../variants/select-variants";
+import FormError from "../../FormError";
 
 interface Option {
   label: string;
@@ -13,7 +18,7 @@ interface Option {
 }
 
 interface SelectProps
-  extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size' | 'color'>,
+  extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "size" | "color">,
     VariantProps<typeof selectVariants> {
   label?: string | boolean;
   icon?: string;
@@ -29,13 +34,13 @@ const Select: FC<SelectProps> = ({
   label,
   options = [],
   icon,
-  color = 'default',
+  color = "default",
   shape,
-  size = 'md',
+  size = "md",
   error,
   loading = false,
-  className: classes = '',
-  containerClasses = '',
+  className: classes = "",
+  containerClasses = "",
   availableDataAPI,
   formik,
   ...props
@@ -46,7 +51,7 @@ const Select: FC<SelectProps> = ({
   // const error = "hello world!";
   useEffect(() => {
     if (formik) {
-      if (formik.values[props.name]) {
+      if (formik.values[props.name as string]) {
         // console.log('formik values',);
       } else {
         if (availableDataAPI && options.length === 0) {
@@ -55,7 +60,7 @@ const Select: FC<SelectProps> = ({
             .then((data) => {
               const fetchedOptions = data.map((d: any) => ({
                 label: d.username,
-                value: d.username
+                value: d.username,
               }));
               setUpdatedOptions(fetchedOptions);
 
@@ -81,14 +86,36 @@ const Select: FC<SelectProps> = ({
       )}
       <div className="relative">
         <div
-          className={`group relative inline-block w-full after:pointer-events-none after:absolute after:end-[1.125em] after:top-1/2 after:z-[4] after:block after:h-[.625em] after:w-[.625em] after:rounded-[2px] after:border-b-[3px] after:border-s-[3px] after:border-muted-400 after:transition-all after:duration-300 after:content-[''] after:[transform:scale(0.8)_rotate(-45deg)] focus-within:after:[transform:scale(0.8)_rotate(-225deg)] ${size === 'sm' ? 'after:-mt-[.4575em] focus-within:after:top-[60%]' : ''} ${size === 'md' ? 'after:-mt-[.4575em] focus-within:after:top-[60%]' : ''} ${size === 'lg' ? 'after:-mt-[.4575em] focus-within:after:top-[60%]' : ''} ${loading ? 'pointer-events-none after:!border-transparent' : ''} `}
+          className={`group relative inline-block w-full after:pointer-events-none after:absolute after:end-[1.125em] after:top-1/2 after:z-[4] after:block after:h-[.625em] after:w-[.625em] after:rounded-[2px] after:border-b-[3px] after:border-s-[3px] after:border-muted-400 after:transition-all after:duration-300 after:content-[''] after:[transform:scale(0.8)_rotate(-45deg)] focus-within:after:[transform:scale(0.8)_rotate(-225deg)] ${
+            size === "sm"
+              ? "after:-mt-[.4575em] focus-within:after:top-[60%]"
+              : ""
+          } ${
+            size === "md"
+              ? "after:-mt-[.4575em] focus-within:after:top-[60%]"
+              : ""
+          } ${
+            size === "lg"
+              ? "after:-mt-[.4575em] focus-within:after:top-[60%]"
+              : ""
+          } ${loading ? "pointer-events-none after:!border-transparent" : ""} `}
         >
           <select
             className={selectVariants({
               size,
               color,
               shape,
-              className: `peer ${classes} ${size === 'sm' && icon ? '!py-1 ps-8' : ''} ${size === 'md' && icon ? 'ps-10' : ''} ${size === 'lg' && icon ? 'ps-12' : ''} ${size === 'sm' && !icon ? '!py-1 !pt-1.5 ps-2' : ''} ${size === 'md' && !icon ? 'ps-3' : ''} ${size === 'lg' && !icon ? 'ps-4' : ''} ${error ? '!border-error-500' : ''} ${loading ? '!select-none !text-transparent !shadow-none' : ''}`
+              className: `peer ${classes} ${
+                size === "sm" && icon ? "!py-1 ps-8" : ""
+              } ${size === "md" && icon ? "ps-10" : ""} ${
+                size === "lg" && icon ? "ps-12" : ""
+              } ${size === "sm" && !icon ? "!py-1 !pt-1.5 ps-2" : ""} ${
+                size === "md" && !icon ? "ps-3" : ""
+              } ${size === "lg" && !icon ? "ps-4" : ""} ${
+                error ? "!border-error-500" : ""
+              } ${
+                loading ? "!select-none !text-transparent !shadow-none" : ""
+              }`,
             })}
             {...props}
             // {...(formik.values[props.name] && { value: formik.values[props.name] })}
@@ -103,7 +130,11 @@ const Select: FC<SelectProps> = ({
 
         {!!icon && (
           <div
-            className={`absolute start-0 top-0 flex items-center justify-center text-muted-400 transition-colors duration-300 peer-focus-visible:text-primary-500 dark:text-muted-500 ${size === 'sm' ? 'h-8 w-8' : ''} ${size === 'md' ? 'h-10 w-10' : ''} ${size === 'lg' ? 'h-12 w-12' : ''}`}
+            className={`absolute start-0 top-0 flex items-center justify-center text-muted-400 transition-colors duration-300 peer-focus-visible:text-primary-500 dark:text-muted-500 ${
+              size === "sm" ? "h-8 w-8" : ""
+            } ${size === "md" ? "h-10 w-10" : ""} ${
+              size === "lg" ? "h-12 w-12" : ""
+            }`}
           >
             {/* <ReIcon
               iconName={icon}
@@ -113,14 +144,18 @@ const Select: FC<SelectProps> = ({
         )}
         {!!loading && (
           <div
-            className={`absolute end-0 top-0 z-0 flex items-center justify-center text-muted-400 transition-colors duration-300 peer-focus-visible:text-primary-500 dark:text-muted-500 ${size === 'sm' ? 'h-8 w-8' : ''} ${size === 'md' ? 'h-10 w-10' : ''} ${size === 'lg' ? 'h-12 w-12' : ''}`}
+            className={`absolute end-0 top-0 z-0 flex items-center justify-center text-muted-400 transition-colors duration-300 peer-focus-visible:text-primary-500 dark:text-muted-500 ${
+              size === "sm" ? "h-8 w-8" : ""
+            } ${size === "md" ? "h-10 w-10" : ""} ${
+              size === "lg" ? "h-12 w-12" : ""
+            }`}
           >
             <Loader
               classNames={`dark:text-muted-200
                 ${
-                  color === 'muted' || color === 'mutedContrast'
-                    ? 'text-muted-400'
-                    : 'text-muted-300'
+                  color === "muted" || color === "mutedContrast"
+                    ? "text-muted-400"
+                    : "text-muted-300"
                 }
               `}
               size={20}
@@ -132,7 +167,7 @@ const Select: FC<SelectProps> = ({
           <span className="text-red-500 mt-0.5 block font-sans text-[0.75rem]">{error}</span>
         )} */}
         <div className="mt-0.5 font-sans">
-          <FormError formik={formik} name={props.name} helperText={''} />
+          <FormError formik={formik} name={props.name || ""} helperText={""} />
         </div>
       </div>
     </div>

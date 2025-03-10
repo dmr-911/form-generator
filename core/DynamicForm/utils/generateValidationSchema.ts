@@ -1,25 +1,29 @@
 import { getYupValidation } from "./getYupValidation";
 import * as Yup from "yup";
 
-export const generateValidationSchema = (items, values, update) => {
-  const buildSchema = (items, bValues) => {
-    return items?.reduce((schema, item) => {
-      let validator = getYupValidation(
+export const generateValidationSchema = (
+  items: any[] = [],
+  values: Record<string, any> = {},
+  update: Record<string, any> = {}
+): Record<string, Yup.Schema<any>> => {
+  const buildSchema = (items: any, bValues: any) => {
+    return items?.reduce((schema: any, item: any) => {
+      let validator: any = getYupValidation(
         item?.validation?.type || "string",
         item?.validation?.validations || {},
         item?.multiple
       );
 
-      if (item.matches) {
+      if (item.matches && validator instanceof Yup.StringSchema) {
         validator = validator.matches(
           new RegExp(item.matches),
           "Invalid value"
         );
       }
 
-      if (item.oneOf) {
+      if (item.oneOf && validator instanceof Yup.StringSchema) {
         validator = validator.oneOf(
-          [Yup.ref(item.oneOf), null],
+          [Yup.ref(item.oneOf)],
           "Passwords must match"
         );
       }
@@ -49,8 +53,8 @@ export const generateValidationSchema = (items, values, update) => {
           }
         };
 
-        const evaluateRules = (condition, rules) => {
-          return rules.reduce((acc, rule) => {
+        const evaluateRules = (condition: any, rules: any) => {
+          return rules.reduce((acc: any, rule: any) => {
             const ruleResult = rule.rules
               ? evaluateRules(rule.condition, rule.rules) // Recursively evaluate nested rules
               : evaluateRule(rule); // Evaluate the individual rule

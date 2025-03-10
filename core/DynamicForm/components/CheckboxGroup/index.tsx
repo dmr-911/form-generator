@@ -17,24 +17,19 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
 }) => {
   const handleChange = (value: { label?: string; value: any }) => {
     const selectedValues = formik.values[name] || [];
-    const valueToCheck = value;
-    const isSelected = selectedValues.some(
-      (item: { label?: string; value: any }) => item === valueToCheck
-    );
+    const valueToCheck = value.value; // using value directly
+
+    const isSelected = selectedValues.includes(valueToCheck);
 
     if (isSelected) {
       // Remove the value if it is already selected
       formik.setFieldValue(
         name,
-        selectedValues
-          .filter(
-            (item: { label?: string; value: any }) => item !== valueToCheck
-          )
-          .map((item: { label?: string; value: any }) => item)
+        selectedValues.filter((item: any) => item !== valueToCheck)
       );
     } else {
       // Add the value if it is not selected
-      formik.setFieldValue(name, [...selectedValues, value]);
+      formik.setFieldValue(name, [...selectedValues, valueToCheck]);
     }
   };
 
@@ -44,7 +39,7 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
       aria-labelledby="checkbox-group"
       className="col-span-full w-full font-sans"
     >
-      {!!label && (
+      {label && (
         <label className="font-sans text-[.85rem] text-muted-400">
           {label}
         </label>
@@ -52,18 +47,20 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
       <div className="mt-2 grid grid-cols-4 gap-4">
         {options?.map((option) => (
           <Checkbox
-            key={option.value}
+            key={option.value} // key is for React to track the list items
             label={option.label || ""}
             value={option.value}
-            checked={(formik.values[name] || []).find(
-              (value: string) => value === option.value
-            )}
-            onChange={() => handleChange(option.value)}
+            checked={formik.values[name]?.includes(option.value) || false} // Simplified checked logic
+            onChange={() => handleChange(option)} // Passing the entire option
             onBlur={formik.handleBlur}
+            disabled={option.disabled} // If option is disabled, pass it to Checkbox component
           />
         ))}
       </div>
-      <FormError name={name} formik={formik} helperText={""} />
+      {/* Render error message if exists */}
+      {formik.touched[name] && formik.errors[name] && (
+        <FormError name={name} formik={formik} helperText={formik.errors[name]} />
+      )}
     </div>
   );
 };

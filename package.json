@@ -1,12 +1,23 @@
 {
   "name": "form-generator",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "private": false,
+  "type": "module",
+  "source": "src/index.ts",
+  "main": "dist/index.ts",
+  "module": "dist/index.module.ts",
+  "unpkg": "dist/index.umd.ts",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "baseUrl": ".",
+    "paths": {
+      "react": ["node_modules/@types/react"]
+    }
+  },
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "build": "microbundle --no-typecheck",
+    "dev": "microbundle watch --no-typecheck"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
@@ -26,8 +37,8 @@
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
     "@types/react-signature-canvas": "^1.0.7",
     "autoprefixer": "^10.4.20",
     "eslint": "^9",
@@ -36,5 +47,9 @@
     "postcss": "^8.5.3",
     "postcss-import": "^16.1.0",
     "typescript": "^5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmr-911/form-generator.git"
   }
 }

@@ -21,6 +21,10 @@ interface FileUploaderProps {
   maxFiles?: number; // maximum number of files allowed
   onFileUpload?: (file: FileObject) => void;
   onFileRemove?: (fileId: string) => void;
+  files?: FileObject[]; // initial files
+  name?: string; // formik field name
+  formik?: any;
+  multiple?: boolean;
 }
 
 const FileUploader: React.FC<FileUploaderProps> = ({
@@ -32,6 +36,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
   files: initialFiles,
   name,
   formik,
+  multiple = false,
 }) => {
   const [files, setFiles] = useState<FileObject[]>(initialFiles || []);
   const [dragActive, setDragActive] = useState<boolean>(false);
@@ -183,7 +188,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
     if (formik && name) {
       formik.setFieldValue(
         name,
-        formik.values[name].filter((f) => f.id !== id)
+        formik.values[name].filter((f: any) => f.id !== id)
       );
     }
 
@@ -395,8 +400,9 @@ const FileUploader: React.FC<FileUploaderProps> = ({
     );
   };
 
-  let formikError = formik
-    ? (getIn(formik.touched, name) && getIn(formik.errors, name)) || false
+  let formikError: any = formik
+    ? (getIn(formik.touched, name || "") && getIn(formik.errors, name || "")) ||
+      false
     : false;
 
   return (
@@ -485,7 +491,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
           </div>
         </div>
       )}
-      <FormError formik={formik} name={name} helperText={``} />
+      <FormError formik={formik} name={name || ""} helperText={``} />
 
       {/* File list */}
       {files.length > 0 && (
@@ -549,7 +555,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                 <div className="flex items-center">
                   <button
                     className="text-gray-500 hover:text-blue-500 transition-colors mr-2"
-                    onClick={(e) => {
+                    onClick={(e: React.MouseEvent) => {
                       e.stopPropagation();
                       handlePreview(file);
                     }}
@@ -581,7 +587,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
 
                   <button
                     className="text-gray-500 hover:text-red-500 transition-colors"
-                    onClick={(e) => {
+                    onClick={(e : React.MouseEvent) => {
                       e.stopPropagation();
                       removeFile(file.id);
                     }}

@@ -2,6 +2,9 @@ import React, { type FC } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { toggleSwitchVariants } from "../variants/toggle-switch-variants";
 
+// Define the possible color values based on the variants
+type ToggleSwitchColor = "default" | "primary" | "info" | "success" | "warning" | "danger" | null;
+
 interface ToggleSwitchProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "color">,
     VariantProps<typeof toggleSwitchVariants> {
@@ -9,6 +12,12 @@ interface ToggleSwitchProps
   label?: string;
   sublabel?: string;
   supportText?: any;
+  color?: ToggleSwitchColor;  // Use the specific type here
+  id?: string;
+  formik?: any;
+  labelText?: string;
+  autoComplete?: string;
+  shape?: string;
 }
 
 const ToggleSwitch: FC<ToggleSwitchProps> = ({
@@ -19,9 +28,13 @@ const ToggleSwitch: FC<ToggleSwitchProps> = ({
   color,
   className: classes = "",
   supportText,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   formik,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   labelText,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   autoComplete,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   shape,
   
   ...props

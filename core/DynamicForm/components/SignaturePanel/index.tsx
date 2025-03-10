@@ -1,9 +1,5 @@
 "use client";
-import React, {
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SignaturePad from "react-signature-canvas";
 import { getIn } from "formik";
 import FormError from "../../FormError";
@@ -13,6 +9,9 @@ interface SignaturePenalProps {
   name: string;
   label: string;
   formik?: any;
+  labelPosition?: string;
+  labelClassName?: string;
+  [key: string]: any;
 }
 
 const SignaturePanel = ({
@@ -32,14 +31,16 @@ const SignaturePanel = ({
   const [backgroundColor, setBackgroundColor] = useState("white");
   const [velocityFilterWeight, setVelocityFilterWeight] = useState(0.7);
   // Load initial data if available
-  useEffect(() => {
-    if (formik && ref.current) {
-      const canvas = ref.current.getCanvas();
-      const context = canvas.getContext("2d");
-      const img = new Image();
-      img.src = getIn(formik.values, props.name);
+useEffect(() => {
+  if (formik && ref.current) {
+    const canvas = ref.current.getCanvas();
+    const context = canvas.getContext("2d");
+    const img = new Image();
+    img.src = getIn(formik.values, props.name);
 
-      img.onload = () => {
+    img.onload = () => {
+      // Ensure context is not null before using it
+      if (context) {
         // Get the dimensions of the canvas and image
         const canvasWidth = canvas.width;
         const canvasHeight = canvas.height;
@@ -53,9 +54,10 @@ const SignaturePanel = ({
         // Clear the canvas and draw the centered image
         context.clearRect(0, 0, canvasWidth, canvasHeight);
         context.drawImage(img, x, y);
-      };
-    }
-  }, [props.name, formik]);
+      }
+    };
+  }
+}, [props.name, formik]);
 
   const handleSignatureEnd = (field: string, ref: React.RefObject<any>) => {
     if (ref?.current) {
@@ -68,35 +70,39 @@ const SignaturePanel = ({
     }
   };
 
-    // Render the label based on the labelPosition prop
-    const renderLabel = () => {
-      const defaultLabelClass = "text-sm font-medium";
-      
-      switch (labelPosition) {
-        case "above":
-          return (
-            <label 
-              htmlFor={props.name} 
-              className={`block mb-2 ${defaultLabelClass} ${labelClassName}`}
-            >
-              {props.label}
-            </label>
-          );
-        case "top-center":
-          return (
-            <div className={`bg-primary-500 dark:bg-muted-600 text-white py-1 px-4 absolute rounded-lg top-2 left-1/2 transform -translate-x-1/2 select-none ${labelClassName}`}>
-              {props.label}
-            </div>
-          );
-        case "top-left":
-        default:
-          return (
-            <div className={`bg-primary-500 dark:bg-muted-600 text-white py-1 px-2 absolute rounded-lg top-2 left-2 select-none ${labelClassName}`}>
-              {props.label}
-            </div>
-          );
-      }
-    };
+  // Render the label based on the labelPosition prop
+  const renderLabel = () => {
+    const defaultLabelClass = "text-sm font-medium";
+
+    switch (labelPosition) {
+      case "above":
+        return (
+          <label
+            htmlFor={props.name}
+            className={`block mb-2 ${defaultLabelClass} ${labelClassName}`}
+          >
+            {props.label}
+          </label>
+        );
+      case "top-center":
+        return (
+          <div
+            className={`bg-primary-500 dark:bg-muted-600 text-white py-1 px-4 absolute rounded-lg top-2 left-1/2 transform -translate-x-1/2 select-none ${labelClassName}`}
+          >
+            {props.label}
+          </div>
+        );
+      case "top-left":
+      default:
+        return (
+          <div
+            className={`bg-primary-500 dark:bg-muted-600 text-white py-1 px-2 absolute rounded-lg top-2 left-2 select-none ${labelClassName}`}
+          >
+            {props.label}
+          </div>
+        );
+    }
+  };
 
   return (
     <div className="w-full relative mr-4 rounded-lg">

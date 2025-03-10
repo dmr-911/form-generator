@@ -128,7 +128,7 @@ interface FormikValues {
   [key: string]: Record<string, string | string[] | any[]>;
 }
 
-const DynamicForm = ({
+const DynamicForm: React.FC<DynamicFormProps> = ({
   formData,
   className,
   store,
@@ -144,14 +144,15 @@ const DynamicForm = ({
   isRealTime,
   setRealTimeValues,
   noGap = true,
-}: DynamicFormProps) => {
+}) => {
   // Inside your component
   const generateSchema = useCallback(
-    (items: Item[], values: FormikValues, mode: any) => {
+    (items: any, values: any, mode: any) => {
       return Yup.object(
         generateValidationSchema(
-          items.filter(
-            (item) => !item.variant?.includes("custom") || item.type === "HTML"
+          (items as any)?.filter(
+            (item: any) =>
+              !item.variant?.includes("custom") || item.type === "HTML"
           ),
           values,
           mode
@@ -160,6 +161,7 @@ const DynamicForm = ({
     },
     []
   );
+  
   const [formItems, setFormItems] = useState(formData.items);
   const [validationSchema, setValidationSchema] = useState();
 
@@ -303,7 +305,7 @@ const DynamicForm = ({
       const updatedItems = updateItemsWithDependencies(formItems);
       if (formik.values && Object.keys(formik.values).length > 0) {
         setValidationSchema(
-          generateSchema(updatedItems, formik?.values, "update")
+          generateSchema(updatedItems, formik?.values, "update") as any
         );
         setFormItems(updatedItems);
       }
@@ -347,55 +349,6 @@ const DynamicForm = ({
 
   useEffect(() => {
     const handleResize = () => {
-      const updatedItems = adjustWidths(formData.items, window.innerWidth);
-
-      // const updatedItemsWithValidation = updatedItems.map((item: any) => {
-      //   if (item?.depends) {
-      //     const { condition, rules } = item.depends;
-
-      //     // Recursive function to evaluate the rules
-      //     const evaluateRule = (rule: any) => {
-      //       const { field, operator, value } = rule;
-      //       const fieldValue: any = formik?.values[field];
-
-      //       switch (operator) {
-      //         case 'eq':
-      //           return fieldValue === value;
-      //         case 'gt':
-      //           return fieldValue > value;
-      //         case 'lt':
-      //           return fieldValue < value;
-      //         case 'contains':
-      //           return fieldValue?.includes(value);
-      //         default:
-      //           return false;
-      //       }
-      //     };
-
-      //     const evaluateRules = (condition: any, rules: any) => {
-      //       return rules.reduce((acc: any, rule: any) => {
-      //         const ruleResult = rule.rules
-      //           ? evaluateRules(rule.condition, rule.rules) // Recursively evaluate nested rules
-      //           : evaluateRule(rule); // Evaluate the individual rule
-
-      //         if (condition === 'AND') {
-      //           return acc && ruleResult;
-      //         } else if (condition === 'OR') {
-      //           return acc || ruleResult;
-      //         }
-      //         return acc; // Default case, should not be reached
-      //       }, condition === 'AND'); // Initialize accumulator based on condition
-      //     };
-
-      //     const isValid = evaluateRules(condition, rules);
-
-      //     if (!isValid) {
-      //       return { ...item, hidden: true }; // removed required : false
-      //     }
-      //     return { ...item, hidden: false }; // removed required : true
-      //   }
-      //   return item;
-      // });
       const updateItemsWithDependencies = (items: Item[] | any) => {
         return items?.map((item: any, index: number) => {
           item = checkDependency({
@@ -460,7 +413,11 @@ const DynamicForm = ({
 
       setFormItems(updatedItemsWithValidation);
       setValidationSchema(
-        generateSchema(updatedItemsWithValidation, formik?.values, "initial")
+        generateSchema(
+          updatedItemsWithValidation,
+          formik?.values,
+          "initial"
+        ) as any
       );
     };
 
@@ -513,6 +470,7 @@ const DynamicForm = ({
     };
 
     return (
+      // @ts-ignore - JSX element implicitly has type 'any'
       <div
         key={item.id || `${Math.random() * 1000 + new Date().getTime()}`}
         style={{
@@ -571,7 +529,7 @@ const DynamicForm = ({
 
         <button
           type="button"
-          onClick={(e) => {
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.stopPropagation();
             handleAddFieldArrayItem(itemName, item?.form.items);
           }}
@@ -754,23 +712,25 @@ const DynamicForm = ({
 
   // console.log('sorted items', formik.errors, formik.values);
   return (
-    <form onSubmit={formik?.handleSubmit} autoComplete="off">
-      <div
-        className={cn(
-          `relative grid w-full ${!noGap && "px-4 py-3"} `,
-          className && className
-        )}
-        style={{
-          gridTemplateColumns: `repeat(${formData.grid || 1}, 1fr)`,
-          gap: "0.5rem",
-          maxWidth: "100%",
-          margin: "0 auto",
-        }}
-      >
-        {renderFields({ items: sortedItems, parentName: undefined })}
-      </div>
-      {children}
-    </form>
+    <React.Fragment>
+      <form onSubmit={formik?.handleSubmit} autoComplete="off">
+        <div
+          className={cn(
+            `relative grid w-full ${!noGap && "px-4 py-3"} `,
+            className && className
+          )}
+          style={{
+            gridTemplateColumns: `repeat(${formData.grid || 1}, 1fr)`,
+            gap: "0.5rem",
+            maxWidth: "100%",
+            margin: "0 auto",
+          }}
+        >
+          {renderFields({ items: sortedItems, parentName: undefined })}
+        </div>
+        {children}
+      </form>
+    </React.Fragment>
   );
 };
 
@@ -793,15 +753,13 @@ export const InputRenderrer = (input: any) => {
 
     case "file":
       return (
-        <>
-          <File
-            files={rest?.value}
-            name={rest?.name}
-            formik={rest?.formik}
-            multiple={rest?.multiple}
-            acceptedFileTypes={["image/png", "image/jpeg", "application/pdf"]}
-          />
-        </>
+        <File
+          files={rest?.value}
+          name={rest?.name}
+          formik={rest?.formik}
+          multiple={rest?.multiple}
+          allowedFileTypes={["image/png", "image/jpeg", "application/pdf"]}
+        />
       );
 
     case "textarea":
@@ -822,31 +780,24 @@ export const InputRenderrer = (input: any) => {
       switch (rest.multiple) {
         case true:
           return (
-            <>
-              <ComboSelect
-                label={rest.label}
-                placeholder={rest.placeholder}
-                options={rest.options}
-                floating={true}
-                {...rest}
-                onChange={(value) => {
-                  // setSelectedRole(value);
-                  // handleChange('selectedRole');
-                  rest.formik.setFieldValue(rest.name, value);
-                }}
-                value={getIn(rest.formik.values, rest.name)}
-                multiple
-                // floating={true}
-                error={rest.formik.errors[rest.name]}
+            <ComboSelect
+              label={rest.label}
+              placeholder={rest.placeholder}
+              options={rest.options}
+              floating={true}
+              {...rest}
+              onChange={(value) => {
+                // setSelectedRole(value);
+                // handleChange('selectedRole');
+                rest.formik.setFieldValue(rest.name, value);
+              }}
+              value={getIn(rest.formik.values, rest.name)}
+              multiple
+              // floating={true}
+              error={rest.formik.errors[rest.name]}
 
-                // onBlur={() => handleBlur('selectedRole')}
-              />
-              <FormError
-                name={rest.name}
-                formik={rest.formik}
-                helperText={``}
-              />
-            </>
+              // onBlur={() => handleBlur('selectedRole')}
+            />
           );
 
         default:
@@ -866,7 +817,6 @@ export const InputRenderrer = (input: any) => {
 
     case "signature":
       return <SignaturePanel {...rest} />;
-
 
     default:
       return <Input type={type} {...rest} autoComplete="new-password" />;
